@@ -119,16 +119,16 @@ def create_graph(llama_llm, qwen_llm):
     def route_after_input(state: AgentState) -> str:
         if state.get("should_exit", False):
             return END
-        return "route_to_model"
+        return "parallel_models"
 
-    def route_to_model(state: AgentState) -> str:
-        """Always route to parallel execution."""
-        return "parallel"
+    def parallel_models(state: AgentState) -> dict:
+        """Node that triggers both models - they run in parallel via graph structure."""
+        return {}
 
     graph_builder = StateGraph(AgentState)
 
     graph_builder.add_node("get_user_input", get_user_input)
-    graph_builder.add_node("route_to_model", route_to_model)
+    graph_builder.add_node("parallel_models", parallel_models)
     graph_builder.add_node("call_llama", call_llama)
     graph_builder.add_node("call_qwen", call_qwen)
     graph_builder.add_node("print_responses", print_responses)
@@ -139,19 +139,12 @@ def create_graph(llama_llm, qwen_llm):
         "get_user_input",
         route_after_input,
         {
-            "route_to_model": "route_to_model",
+            "parallel_models": "parallel_models",
             END: END
         }
     )
-
-    # Create a node that triggers both models in parallel
-    def parallel_models(state: AgentState) -> dict:
-        """Node that triggers both models - they run in parallel via graph structure."""
-        return {}
-
-    graph_builder.add_node("parallel_models", parallel_models)
     
-    # Both models receive input from parallel_models node
+    # Both models receive input from parallel_models node (runs in parallel)
     graph_builder.add_edge("parallel_models", "call_llama")
     graph_builder.add_edge("parallel_models", "call_qwen")
     

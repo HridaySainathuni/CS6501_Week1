@@ -1,0 +1,50 @@
+Example Multi-Model Conversation with Chat History
+====================================================
+
+This demonstrates how the system handles three entities (Human, Llama, Qwen)
+using the Message API with name prefixes.
+
+Conversation:
+-------------
+
+> What is the best ice cream flavor?
+
+[Llama] Processing with chat history...
+[DEBUG] Conversation length: 1 messages
+
+Llama Response:
+--------------------------------------------------
+There is no one best flavor, as taste is subjective. However, vanilla is
+the most popular flavor worldwide due to its versatility and classic appeal.
+
+> Hey Qwen, what do you think?
+
+[Qwen] Processing with chat history...
+[DEBUG] Conversation length: 2 messages
+
+Qwen Response:
+--------------------------------------------------
+No way! Chocolate is definitely the best ice cream flavor. It's rich, creamy,
+and has that perfect balance of sweetness and depth. Vanilla is too plain.
+
+> I agree with Qwen
+
+[Llama] Processing with chat history...
+[DEBUG] Conversation length: 3 messages
+
+Llama Response:
+--------------------------------------------------
+I understand you prefer chocolate. While I mentioned vanilla's popularity,
+chocolate is indeed a wonderful choice with its rich flavor profile. Both
+flavors have their merits, and personal preference is what matters most.
+
+Observations:
+-------------
+1. Each model sees the full conversation history
+2. Models can reference previous responses from other models
+3. The system maintains context across model switches
+4. Name prefixes (Human:, Llama:, Qwen:) allow proper role assignment
+5. System prompts are model-specific, explaining the multi-agent setup
+
+This demonstrates effective multi-agent conversation management using LangGraph
+and the Message API.

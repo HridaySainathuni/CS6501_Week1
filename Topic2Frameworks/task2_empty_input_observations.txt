@@ -1,0 +1,44 @@
+Empty Input Behavior Observations
+==================================
+
+Test: Running task2_empty_input_handling.py and entering empty input multiple times.
+
+First Empty Input:
+------------------
+> [Enter pressed with no text]
+[INFO] Empty input detected, prompting again...
+
+The system correctly detected empty input and looped back to get_user_input node
+without sending anything to the LLM. This is the expected behavior.
+
+Second Empty Input:
+-------------------
+> [Enter pressed with no text again]
+[INFO] Empty input detected, prompting again...
+
+Same behavior - the system continues to loop back, never sending empty input to the LLM.
+
+What This Reveals About Small LLMs:
+------------------------------------
+Small LLMs like Llama 3.2-1B-Instruct lack the sophistication of larger models:
+
+1. **Inconsistent Handling**: Without explicit handling, small LLMs may produce
+   random or nonsensical responses to empty input because they lack the context
+   understanding to recognize edge cases.
+
+2. **Limited Reasoning**: Smaller models don't have the same level of reasoning
+   capability to understand that empty input should be handled gracefully.
+
+3. **Training Limitations**: These models are trained on text data, and empty
+   input is an edge case that may not be well-handled in their training.
+
+4. **Why This Matters**: This demonstrates why input validation and edge case
+   handling is important when working with smaller language models. The graph
+   structure in LangGraph allows us to handle this at the framework level rather
+   than relying on the model itself.
+
+Conclusion:
+-----------
+The 3-way conditional routing in LangGraph provides a clean way to handle edge
+cases like empty input without relying on the LLM's ability to handle them.
+This is a best practice when working with smaller models.
