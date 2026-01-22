@@ -1,0 +1,11 @@
+transformers>=4.40.0
+torch>=2.0.0
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-huggingface>=0.0.1
+langgraph>=0.0.20
+grandalf>=0.1
+accelerate>=0.20.0
+tqdm>=4.65.0
+huggingface_hub>=0.20.0
+typing-extensions>=4.8.0
